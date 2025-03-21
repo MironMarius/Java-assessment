@@ -18,7 +18,6 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private Date timestamp;
     @ElementCollection
     private List<OrderProduct> orderProducts;
