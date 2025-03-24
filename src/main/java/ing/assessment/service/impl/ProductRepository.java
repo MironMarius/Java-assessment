@@ -1,4 +1,4 @@
-package ing.assessment.db.repository;
+package ing.assessment.service.impl;
 
 import ing.assessment.db.product.Product;
 import ing.assessment.db.product.ProductCK;

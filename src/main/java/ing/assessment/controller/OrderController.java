@@ -2,6 +2,7 @@ package ing.assessment.controller;
 
 import ing.assessment.db.order.Order;
 import ing.assessment.exception.InvalidOrderException;
+import ing.assessment.exception.OrderNotFoundException;
 import ing.assessment.exception.OutOfStockException;
 import ing.assessment.exception.ProductNotFoundException;
 import ing.assessment.service.OrderService;
@@ -34,11 +35,11 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getOrder(@PathVariable("id") Integer id) throws ProductNotFoundException {
+    public ResponseEntity<?> getOrder(@PathVariable("id") Integer id) throws OrderNotFoundException {
         Optional<Order> order = orderService.getOrderById(id);
 
         if (order.isEmpty()) {
-            throw new ProductNotFoundException("Product with id: " + id + " not found");
+            throw new OrderNotFoundException("Order with id: " + id + " not found");
         }
 
         return ResponseEntity.ok(order.get());

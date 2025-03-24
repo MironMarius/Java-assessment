@@ -3,8 +3,6 @@ package ing.assessment.service.impl;
 import ing.assessment.db.order.Order;
 import ing.assessment.db.order.OrderProduct;
 import ing.assessment.db.product.Product;
-import ing.assessment.db.repository.OrderRepository;
-import ing.assessment.db.repository.ProductRepository;
 import ing.assessment.exception.OutOfStockException;
 import ing.assessment.exception.ProductNotFoundException;
 import ing.assessment.service.OrderService;
@@ -39,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
             List<Product> products = productRepository.findByProductCk_Id(productId);
 
             if (products.isEmpty()) {
-                throw new ProductNotFoundException("Product with ID " + productId + " not found");
+                throw new ProductNotFoundException("Product with ID: " + productId + " not found");
             }
 
             Product product = products.get(0);

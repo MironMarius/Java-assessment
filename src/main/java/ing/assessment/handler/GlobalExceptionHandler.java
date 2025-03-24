@@ -2,6 +2,7 @@ package ing.assessment.handler;
 
 import ing.assessment.dto.ErrorResponseDTO;
 import ing.assessment.exception.InvalidOrderException;
+import ing.assessment.exception.OrderNotFoundException;
 import ing.assessment.exception.OutOfStockException;
 import ing.assessment.exception.ProductNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,17 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponseDTO> handleProductNotFound(ProductNotFoundException ex) {
         ErrorResponseDTO error = new ErrorResponseDTO(
                 HttpStatus.NOT_FOUND.value(),
-                "Product Not Found",
+                "Product not found",
+                ex.getMessage()
+        );
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(OrderNotFoundException.class)
+    public ResponseEntity<ErrorResponseDTO> handleOrderNotFound(OrderNotFoundException ex) {
+        ErrorResponseDTO error = new ErrorResponseDTO(
+                HttpStatus.NOT_FOUND.value(),
+                "Order not found",
                 ex.getMessage()
         );
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
@@ -27,7 +38,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponseDTO> handleInvalidOrder(InvalidOrderException ex) {
         ErrorResponseDTO error = new ErrorResponseDTO(
                 HttpStatus.BAD_REQUEST.value(),
-                "Invalid Order",
+                "Invalid order",
                 ex.getMessage()
         );
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
@@ -37,7 +48,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponseDTO> handleOutOfStock(OutOfStockException ex) {
         ErrorResponseDTO error = new ErrorResponseDTO(
                 HttpStatus.GONE.value(),
-                "Out of Stock",
+                "Out of stock",
                 ex.getMessage()
         );
         return new ResponseEntity<>(error, HttpStatus.GONE);

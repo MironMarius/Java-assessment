@@ -1,4 +1,4 @@
-package ing.assessment.db.repository;
+package ing.assessment.service.impl;
 
 import ing.assessment.db.order.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
