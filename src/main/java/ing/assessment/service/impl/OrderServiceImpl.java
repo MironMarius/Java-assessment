@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -36,11 +37,13 @@ public class OrderServiceImpl implements OrderService {
             Integer desiredQuantity = entry.getValue();
 
             List<Product> products = productRepository.findByProductCk_Id(productId);
+
             if (products.isEmpty()) {
                 throw new ProductNotFoundException("Product with ID " + productId + " not found");
             }
 
             Product product = products.get(0);
+
             if (product.getQuantity() < desiredQuantity) {
                 throw new OutOfStockException("There is not enough stock of Product: " + product.getName() + ", remaining stock: " + product.getQuantity());
             }
@@ -57,8 +60,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order getOrderById(Integer orderId) {
-        return orderRepository.findById(orderId).orElse(null);
+    public Optional<Order> getOrderById(Integer orderId) {
+        return orderRepository.findById(orderId);
     }
 
     private Order createOrder(Map<Product, Integer> productToQuantity) {
@@ -69,8 +72,15 @@ public class OrderServiceImpl implements OrderService {
             Product product = entry.getKey();
             Integer quantity = entry.getValue();
 
-            orderProducts.add(new OrderProduct(product.getProductCk().getId(), quantity));
-            orderCost = product.getPrice() * quantity;
+            orderProducts.add(
+                    new OrderProduct(
+                        product.getProductCk().getId(),
+                        quantity,
+                        product.getName(),
+                        product.getPrice() * quantity)
+            );
+
+            orderCost += product.getPrice() * quantity;
 
             product.setQuantity(product.getQuantity() - quantity);
             productRepository.save(product);

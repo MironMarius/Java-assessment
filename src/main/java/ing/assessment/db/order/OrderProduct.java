@@ -13,4 +13,6 @@ public class OrderProduct {
 
     private Integer productId;
     private Integer quantity;
+    private String name;
+    private Double totalCost;
 }
