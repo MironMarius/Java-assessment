@@ -22,6 +22,7 @@ public class Order {
     @ElementCollection
     private List<OrderProduct> orderProducts;
     private Double orderCost;
+    private Double discount;
     private Integer deliveryCost = 30; // Default cost of the order
     private Integer deliveryTime = 2;  // Default delivery time for the order
 }

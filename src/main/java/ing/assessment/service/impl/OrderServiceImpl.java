@@ -90,12 +90,13 @@ public class OrderServiceImpl implements OrderService {
         int deliveryTime = computeDeliveryTime(
                 new ArrayList<>(productToQuantity.keySet())
         );
-        orderCost = computeFinalOrderCost(orderCost);
+        double finalOrderCost = computeFinalOrderCost(orderCost);
 
         Order order = new Order();
         order.setTimestamp(new Date());
         order.setOrderProducts(orderProducts);
-        order.setOrderCost(orderCost);
+        order.setDiscount(orderCost - finalOrderCost);
+        order.setOrderCost(finalOrderCost);
         order.setDeliveryCost(deliveryCost);
         order.setDeliveryTime(deliveryTime);
 
