@@ -36,10 +36,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(OutOfStockException.class)
     public ResponseEntity<ErrorResponseDTO> handleOutOfStock(OutOfStockException ex) {
         ErrorResponseDTO error = new ErrorResponseDTO(
-                HttpStatus.CONFLICT.value(),
+                HttpStatus.GONE.value(),
                 "Out of Stock",
                 ex.getMessage()
         );
-        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+        return new ResponseEntity<>(error, HttpStatus.GONE);
     }
 }
