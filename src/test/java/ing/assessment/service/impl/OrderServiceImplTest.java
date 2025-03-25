@@ -115,7 +115,7 @@ class OrderServiceImplTest {
         );
 
         assertEquals(
-                "There is not enough stock of Product: Test Product 1, remaining stock: 50",
+                "There is not enough stock of Product with ID: 1, remaining stock: 50",
                 exception.getMessage()
         );
         verify(productRepository, never()).save(any(Product.class));
